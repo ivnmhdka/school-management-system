@@ -5,6 +5,8 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello world!" << endl;
+    list_siswa listSiswa = {nullptr, nullptr};
+    list_guru listGuru = {nullptr, nullptr};
+    
     return 0;
 }
