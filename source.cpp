@@ -111,3 +111,50 @@ adr_tugas search_tugas(list_siswa listSiswa, string id, adr_tugas &prec, adr_sis
 
     return current;
 }
+
+void delete_siswa(list_siswa &listSiswa, adr_siswa &p, adr_siswa &q) {
+    if (listSiswa.first == p && listSiswa.last == p){
+        listSiswa.first = nullptr;
+        listSiswa.last = nullptr;
+    }else if (listSiswa.first == p) {
+        listSiswa.first = p->next;
+        delete p;
+    } else if (listSiswa.last == p){
+        listSiswa.last = q;
+        q->next = nullptr;
+        delete p;
+    } else {
+        q->next = p->next;
+        delete p;
+        p = nullptr;
+    }
+}
+
+void delete_tugas(adr_siswa &siswa, adr_tugas &p, adr_tugas &q) {
+    if (siswa->listtugas == nullptr) {
+        siswa->listtugas = p->next;
+        delete p;
+    } else {
+        q->next = p->next;
+        delete p;
+    }
+}
+
+void delete_guru(list_guru &listGuru, adr_guru &p) {
+    if (listGuru.first == p && listGuru.last == p){
+        listGuru.first = nullptr;
+        listGuru.last = nullptr;
+        delete p;
+    } else if (listGuru.first == p){
+        listGuru.first = p->next;
+        delete p;
+    } else if (listGuru.last == p){
+        listGuru.last = p->prev;
+        listGuru.last->next = nullptr;
+        delete p;
+    } else {
+        adr_guru q = p->prev;
+        q->next = p->next;
+        delete p;
+    }
+}
