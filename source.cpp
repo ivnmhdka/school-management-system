@@ -158,3 +158,39 @@ void delete_guru(list_guru &listGuru, adr_guru &p) {
         delete p;
     }
 }
+
+void show_all_siswa(list_siswa listSiswa) {
+    cout << "====================================" << endl;
+    cout << "        DATA SISWA (List Parent)    " << endl;
+    cout << "====================================" << endl;
+
+    adr_siswa current = listSiswa.first;
+    int no = 1;
+    while (current != nullptr) {
+        print_siswa_details(current);
+        current = current->next;
+    }
+
+    if (listSiswa.first == nullptr) {
+        cout << "   Tidak ada data siswa." << endl;
+        cout << "------------------------------------" << endl;
+    }
+}
+
+void show_all_guru(list_guru listGuru) {
+    cout << "====================================" << endl;
+    cout << "        DATA GURU (List Child)      " << endl;
+    cout << "====================================" << endl;
+
+    adr_guru current = listGuru.first;
+    int no = 1;
+    while (current != nullptr) {
+        print_guru_details(current);
+        current = current->next;
+    }
+
+    if (listGuru.first == nullptr) {
+        cout << "   Tidak ada data guru." << endl;
+        cout << "------------------------------------" << endl;
+    }
+}
