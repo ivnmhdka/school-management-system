@@ -194,3 +194,104 @@ void show_all_guru(list_guru listGuru) {
         cout << "------------------------------------" << endl;
     }
 }
+
+void show_tugas_siswa_from(adr_siswa x) {
+    if (x == nullptr) {
+        cout << "Siswa tidak ditemukan." << endl;
+        return;
+    }
+    cout << "====================================" << endl;
+    cout << "    TUGAS DARI SISWA: " << x->info.name << endl;
+    cout << "====================================" << endl;
+
+    adr_tugas current = x->listtugas;
+    int no = 1;
+    while (current != nullptr) {
+        cout << no++ << ". Subjek : " << current->info.subjek << endl;
+        cout << "   Tugas id: " << current->info.id << endl;
+        cout << "   Bab     : " << current->info.bab << endl;
+        cout << "   Tenggat : " << current->info.tenggat << endl;
+
+        if (current->from != nullptr) {
+            cout << "   Guru    : " << current->from->info.nama << endl;
+        }
+        cout << "------------------------------------" << endl;
+        current = current->next;
+    }
+
+    if (x->listtugas == nullptr) {
+        cout << "   Tidak ada tugas." << endl;
+        cout << "------------------------------------" << endl;
+    }
+}
+
+void show_all_tugas_siswa_from(list_siswa listSiswa) {
+    cout << "====================================" << endl;
+    cout << "   DATA SISWA DAN TUGAS (Parent-Child) " << endl;
+    cout << "====================================" << endl;
+
+    adr_siswa current = listSiswa.first;
+    while (current != nullptr) {
+        show_tugas_siswa_from(current);
+        current = current->next;
+    }
+
+    if (listSiswa.first == nullptr) {
+        cout << "   Tidak ada data siswa." << endl;
+        cout << "------------------------------------" << endl;
+    }
+}
+
+void show_siswa_from_guru(list_siswa listSiswa, adr_guru x) {
+    if (x == nullptr) {
+        cout << "Guru tidak ditemukan." << endl;
+        return;
+    }
+    cout << "====================================" << endl;
+    cout << " SISWA DARI GURU: " << x->info.nama << endl;
+    cout << "====================================" << endl;
+
+    adr_siswa currentSiswa = listSiswa.first;
+    int no = 1;
+    while (currentSiswa != nullptr) {
+        adr_tugas currentTugas = currentSiswa->listtugas;
+        while (currentTugas != nullptr) {
+            if (currentTugas->from == x) {
+                cout << no++ << ". Nama Siswa : " << currentSiswa->info.name << endl;
+                cout << "------------------------------------" << endl;
+                break;
+            }
+            currentTugas = currentTugas->next;
+        }
+        currentSiswa = currentSiswa->next;
+    }
+
+    if (no == 1) {
+        cout << "   Tidak ada siswa yang memiliki tugas dari guru ini." << endl;
+        cout << "------------------------------------" << endl;
+    }
+}
+
+void show_tugas_siswa_from_guru(list_siswa listSiswa, adr_guru x) {
+    if (x == nullptr) {
+        cout << "Guru tidak ditemukan." << endl;
+        return;
+    }
+
+    cout << "====================================" << endl;
+    cout << "   SISWA BERELASI DENGAN GURU: " << x->info.nama << endl;
+    cout << "====================================" << endl;
+
+    adr_siswa currentSiswa = listSiswa.first;
+    while (currentSiswa != nullptr) {
+        adr_tugas currentTugas = currentSiswa->listtugas;
+        while (currentTugas != nullptr) {
+            if (currentTugas->from == x) {
+                cout << "- Nama Siswa : " << currentSiswa->info.name << endl;
+                break;
+            }
+            currentTugas = currentTugas->next;
+        }
+        currentSiswa = currentSiswa->next;
+    }
+}
