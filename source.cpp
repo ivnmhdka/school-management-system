@@ -295,3 +295,51 @@ void show_tugas_siswa_from_guru(list_siswa listSiswa, adr_guru x) {
         currentSiswa = currentSiswa->next;
     }
 }
+
+int count_all_tugas(list_siswa listSiswa) {
+    int total = 0;
+    adr_siswa currentSiswa = listSiswa.first;
+
+    while (currentSiswa != nullptr) {
+        adr_tugas currentTugas = currentSiswa->listtugas;
+        while (currentTugas != nullptr) {
+            total++;
+            currentTugas = currentTugas->next;
+        }
+        currentSiswa = currentSiswa->next;
+    }
+
+    return total;
+}
+
+int count_tugas_from_siswa(adr_siswa x) {
+    int total = 0;
+    adr_tugas currentTugas = x->listtugas;
+
+    while (currentTugas != nullptr) {
+        total++;
+        currentTugas = currentTugas->next;
+    }
+
+    return total;
+}
+
+int count_siswa_with_no_tugas(list_siswa listSiswa) {
+    int count = 0;
+    adr_siswa currentSiswa = listSiswa.first;
+
+    while (currentSiswa != nullptr) {
+        if (currentSiswa->listtugas == nullptr) {
+            count++;
+        }
+        currentSiswa = currentSiswa->next;
+    }
+
+    return count;
+}
+
+void swap_guru_from_tugas(adr_tugas &xt, adr_guru xg) {
+    if (xt != nullptr && xg != nullptr) {
+        xt->from = xg;
+    }
+}
