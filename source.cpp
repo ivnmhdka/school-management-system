@@ -388,3 +388,177 @@ void print_guru_details(adr_guru guru) {
         cout << "Guru tidak ditemukan!\n";
     }
 }
+
+void process_insert_siswa(list_siswa &listSiswa) {
+    infotype_siswa newSiswa;
+    cout << "Masukkan Nama Siswa: ";
+    cin >> newSiswa.name;
+    cout << "Masukkan ID Siswa: ";
+    cin >> newSiswa.id;
+    cout << "Masukkan Asal Siswa: ";
+    cin >> newSiswa.asal;
+    cout << "Masukkan Kelas Siswa: ";
+    cin >> newSiswa.kelas;
+    cout << "Masukkan Usia Siswa: ";
+    cin >> newSiswa.usia;
+
+    adr_siswa newElm = create_elm_siswa(newSiswa);
+    insert_siswa(listSiswa, newElm);
+    cout << "Siswa berhasil ditambahkan!\n";
+}
+
+void process_insert_tugas(list_siswa &listSiswa, list_guru listGuru) {
+    string siswaId, guruId;
+    infotype_tugas newTugas;
+
+    cout << "Masukkan ID Siswa yang akan diberi tugas: ";
+    cin >> siswaId;
+    cout << "Masukkan ID Guru yang memberikan tugas: ";
+    cin >> guruId;
+
+    adr_siswa targetSiswa;
+    adr_guru targetGuru;
+
+    targetSiswa = search_siswa(listSiswa, siswaId, targetSiswa);
+    targetGuru = search_guru(listGuru, guruId, targetGuru);
+
+    if (targetSiswa != nullptr && targetGuru != nullptr) {
+        cout << "Masukkan ID Tugas: ";
+        cin >> newTugas.id;
+        cout << "Masukkan Subjek Tugas: ";
+        cin >> newTugas.subjek;
+        cout << "Masukkan Bab Tugas: ";
+        cin >> newTugas.bab;
+        cout << "Masukkan Tenggat Tugas: ";
+        cin >> newTugas.tenggat;
+
+        adr_tugas newElm = create_elm_tugas(newTugas);
+        insert_tugas(targetSiswa, targetGuru, newElm);
+        cout << "Tugas berhasil ditambahkan!\n";
+    } else {
+        cout << "Siswa atau Guru tidak ditemukan!\n";
+    }
+}
+
+void process_insert_guru(list_guru &listGuru) {
+    infotype_guru newGuru;
+    cout << "Masukkan Nama Guru: ";
+    cin >> newGuru.nama;
+    cout << "Masukkan ID Guru: ";
+    cin >> newGuru.id;
+    cout << "Masukkan Asal Guru: ";
+    cin >> newGuru.asal;
+    cout << "Masukkan Gelar Guru: ";
+    cin >> newGuru.gelar;
+    cout << "Masukkan Subjek yang Diajarkan: ";
+    cin >> newGuru.guruSubjek;
+    cout << "Masukkan Usia Guru: ";
+    cin >> newGuru.usia;
+
+    adr_guru newElm = create_elm_guru(newGuru);
+    insert_guru(listGuru, newElm);
+    cout << "Guru berhasil ditambahkan!\n";
+}
+
+void process_delete_siswa(list_siswa &listSiswa) {
+    string siswaId;
+    cout << "Masukkan ID Siswa yang akan dihapus: ";
+    cin >> siswaId;
+
+    adr_siswa targetSiswa, prevSiswa = nullptr;
+    targetSiswa = search_siswa(listSiswa, siswaId, prevSiswa);
+
+    if (targetSiswa != nullptr) {
+        delete_siswa(listSiswa, targetSiswa, prevSiswa);
+        cout << "Siswa berhasil dihapus!\n";
+    } else {
+        cout << "Siswa tidak ditemukan!\n";
+    }
+}
+
+
+void process_delete_tugas(list_siswa &listSiswa) {
+    string tugasId;
+    cout << "Masukkan ID Tugas yang akan dihapus: ";
+    cin >> tugasId;
+
+    adr_siswa targetSiswa = nullptr;
+    adr_tugas targetTugas = nullptr, prevTugas = nullptr;
+
+    targetTugas = search_tugas(listSiswa, tugasId, prevTugas, targetSiswa);
+
+    if (targetTugas != nullptr) {
+        delete_tugas(targetSiswa, targetTugas, prevTugas);
+        cout << "Tugas berhasil dihapus!\n";
+    } else {
+        cout << "Tugas tidak ditemukan!\n";
+    }
+}
+
+
+void process_delete_guru(list_guru &listGuru) {
+    string guruId;
+    cout << "Masukkan ID Guru yang akan dihapus: ";
+    cin >> guruId;
+
+    adr_guru targetGuru, prevGuru;
+    targetGuru = search_guru(listGuru, guruId, prevGuru);
+
+    if (targetGuru != nullptr) {
+        delete_guru(listGuru, targetGuru);
+        cout << "Guru berhasil dihapus!\n";
+    } else {
+        cout << "Guru tidak ditemukan!\n";
+    }
+}
+
+void process_search_siswa(list_siswa listSiswa) {
+    string siswaId;
+    cout << "Masukkan ID Siswa yang ingin dicari: ";
+    cin >> siswaId;
+
+    adr_siswa prec = nullptr;
+    adr_siswa targetSiswa = search_siswa(listSiswa, siswaId, prec);
+
+    if (targetSiswa != nullptr) {
+        cout << "Siswa ditemukan:\n";
+        print_siswa_details(targetSiswa);
+    } else {
+        cout << "Siswa dengan ID " << siswaId << " tidak ditemukan!\n";
+    }
+}
+
+void process_search_tugas(list_siswa listSiswa) {
+    string tugasId;
+    cout << "Masukkan ID Tugas yang ingin dicari: ";
+    cin >> tugasId;
+
+    adr_tugas prec = nullptr;
+    adr_siswa targetSiswa = nullptr;
+    adr_tugas targetTugas = search_tugas(listSiswa, tugasId, prec, targetSiswa);
+
+    if (targetTugas != nullptr) {
+        cout << "Tugas ditemukan:\n";
+        print_tugas_details(targetTugas);
+        cout << "Tugas ini dimiliki oleh siswa:\n";
+        print_siswa_details(targetSiswa);
+    } else {
+        cout << "Tugas dengan ID " << tugasId << " tidak ditemukan!\n";
+    }
+}
+
+void process_search_guru(list_guru listGuru) {
+    string guruId;
+    cout << "Masukkan ID Guru yang ingin dicari: ";
+    cin >> guruId;
+
+    adr_guru prec = nullptr;
+    adr_guru targetGuru = search_guru(listGuru, guruId, prec);
+
+    if (targetGuru != nullptr) {
+        cout << "Guru ditemukan:\n";
+        print_guru_details(targetGuru);
+    } else {
+        cout << "Guru dengan ID " << guruId << " tidak ditemukan!\n";
+    }
+}
