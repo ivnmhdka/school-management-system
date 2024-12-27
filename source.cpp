@@ -343,3 +343,48 @@ void swap_guru_from_tugas(adr_tugas &xt, adr_guru xg) {
         xt->from = xg;
     }
 }
+
+void print_siswa_details(adr_siswa siswa) {
+    if (siswa != nullptr) {
+        cout << "----------------------------\n";
+        cout << "Detail Siswa:\n";
+        cout << "Nama     : " << siswa->info.name << "\n";
+        cout << "ID       : " << siswa->info.id << "\n";
+        cout << "Asal     : " << siswa->info.asal << "\n";
+        cout << "Kelas    : " << siswa->info.kelas << "\n";
+        cout << "Usia     : " << siswa->info.usia << "\n";
+        cout << "----------------------------\n";
+    } else {
+        cout << "Siswa tidak ditemukan!\n";
+    }
+}
+
+void print_tugas_details(adr_tugas tugas) {
+    if (tugas != nullptr) {
+        cout << "----------------------------\n";
+        cout << "Detail Tugas:\n";
+        cout << "ID       : " << tugas->info.id << "\n";
+        cout << "Subjek   : " << tugas->info.subjek << "\n";
+        cout << "Bab      : " << tugas->info.bab << "\n";
+        cout << "Tenggat  : " << tugas->info.tenggat << "\n";
+        cout << "----------------------------\n";
+    } else {
+        cout << "Tugas tidak ditemukan!\n";
+    }
+}
+
+void print_guru_details(adr_guru guru) {
+    if (guru != nullptr) {
+        cout << "----------------------------\n";
+        cout << "Detail Guru:\n";
+        cout << "Nama     : " << guru->info.nama << "\n";
+        cout << "ID       : " << guru->info.id << "\n";
+        cout << "Asal     : " << guru->info.asal << "\n";
+        cout << "Gelar    : " << guru->info.gelar << "\n";
+        cout << "Subjek   : " << guru->info.guruSubjek << "\n";
+        cout << "Usia     : " << guru->info.usia << "\n";
+        cout << "----------------------------\n";
+    } else {
+        cout << "Guru tidak ditemukan!\n";
+    }
+}
