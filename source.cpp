@@ -562,3 +562,48 @@ void process_search_guru(list_guru listGuru) {
         cout << "Guru dengan ID " << guruId << " tidak ditemukan!\n";
     }
 }
+
+void process_show_tugas_siswa_from(list_siswa listSiswa) {
+    string siswaId;
+    cout << "Masukkan ID Siswa yang ingin dilihat tugasnya: ";
+    cin >> siswaId;
+
+    adr_siswa targetSiswa, prevSiswa;
+    targetSiswa = search_siswa(listSiswa, siswaId, prevSiswa);
+
+    if (targetSiswa != nullptr) {
+        show_tugas_siswa_from(targetSiswa);
+    } else {
+        cout << "Siswa dengan ID " << siswaId << " tidak ditemukan!\n";
+    }
+}
+
+void process_show_siswa_from_guru(list_siswa listSiswa, list_guru listGuru) {
+    string guruId;
+    cout << "Masukkan ID Guru yang ingin dilihat siswanya: ";
+    cin >> guruId;
+
+    adr_guru targetGuru, prevGuru;
+    targetGuru = search_guru(listGuru, guruId, prevGuru);
+
+    if (targetGuru != nullptr) {
+        show_siswa_from_guru(listSiswa, targetGuru);
+    } else {
+        cout << "Guru dengan ID " << guruId << " tidak ditemukan!\n";
+    }
+}
+
+void process_show_tugas_siswa_from_guru(list_siswa listSiswa, list_guru listGuru) {
+    string guruId;
+    cout << "Masukkan ID Guru yang ingin dilihat tugas-tugasnya: ";
+    cin >> guruId;
+
+    adr_guru targetGuru, prevGuru;
+    targetGuru = search_guru(listGuru, guruId, prevGuru);
+
+    if (targetGuru != nullptr) {
+        show_tugas_siswa_from_guru(listSiswa, targetGuru);
+    } else {
+        cout << "Guru dengan ID " << guruId << " tidak ditemukan!\n";
+    }
+}
