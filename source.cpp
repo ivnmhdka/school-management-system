@@ -607,3 +607,52 @@ void process_show_tugas_siswa_from_guru(list_siswa listSiswa, list_guru listGuru
         cout << "Guru dengan ID " << guruId << " tidak ditemukan!\n";
     }
 }
+
+void process_count_tugas_from_siswa(list_siswa listSiswa) {
+    string siswaId;
+    cout << "Masukkan ID Siswa untuk menghitung jumlah tugas: ";
+    cin >> siswaId;
+
+    adr_siswa targetSiswa, prevSiswa;
+    targetSiswa = search_siswa(listSiswa, siswaId, prevSiswa);
+
+    if (targetSiswa != nullptr) {
+        int tugasCount = count_tugas_from_siswa(targetSiswa);
+        cout << "Jumlah tugas yang dimiliki oleh siswa dengan ID " << siswaId << " adalah: " << tugasCount << endl;
+    } else {
+        cout << "Siswa dengan ID " << siswaId << " tidak ditemukan!\n";
+    }
+}
+
+void process_swap_guru_from_tugas(list_siswa &listSiswa, list_guru &listGuru) {
+    string tugasId, guruId;
+    cout << "Masukkan ID Tugas yang ingin diubah gurunya: ";
+    cin >> tugasId;
+
+    adr_tugas targetTugas, prevTugas;
+    adr_siswa targetSiswa;
+    targetTugas = search_tugas(listSiswa, tugasId, prevTugas, targetSiswa);
+
+    if (targetTugas != nullptr) {
+        cout << "\nDetail Tugas yang dipilih:\n";
+        print_tugas_details(targetTugas);
+
+        cout << "\nDaftar Guru yang tersedia:\n";
+        show_all_guru(listGuru);
+
+        cout << "\nMasukkan ID Guru yang baru: ";
+        cin >> guruId;
+
+        adr_guru targetGuru, prevGuru;
+        targetGuru = search_guru(listGuru, guruId, prevGuru);
+
+        if (targetGuru != nullptr) {
+            swap_guru_from_tugas(targetTugas, targetGuru);
+            cout << "Guru untuk tugas berhasil diubah!\n";
+        } else {
+            cout << "Guru dengan ID " << guruId << " tidak ditemukan!\n";
+        }
+    } else {
+        cout << "Tugas dengan ID " << tugasId << " tidak ditemukan!\n";
+    }
+}
