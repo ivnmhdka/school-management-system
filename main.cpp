@@ -36,6 +36,14 @@ int main() {
         cout << "Your choice: ";
         cin >> choice;
 
+        // validasi input pengguna
+        // if (!(cin >> choice)) {
+        //     cout << "Invalid input, please enter a number.\n";
+        //     cin.clear();
+        //     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        //     continue;
+        // }
+
         switch (choice) {
             case 1: process_insert_siswa(listSiswa); break;
             case 2: process_insert_tugas(listSiswa, listGuru); break;
