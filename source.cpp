@@ -656,3 +656,91 @@ void process_swap_guru_from_tugas(list_siswa &listSiswa, list_guru &listGuru) {
         cout << "Tugas dengan ID " << tugasId << " tidak ditemukan!\n";
     }
 }
+
+void generate_dummy_data(list_siswa &listSiswa, list_guru &listGuru) {
+    adr_siswa siswa1 = new elm_siswa;
+    siswa1->info.name = "Siswa A";
+    siswa1->info.id = "S001";
+    siswa1->info.asal = "Sekolah A";
+    siswa1->info.kelas = "X-A";
+    siswa1->info.usia = 16;
+    siswa1->next = nullptr;
+    siswa1->listtugas = nullptr;
+
+    adr_siswa siswa2 = new elm_siswa;
+    siswa2->info.name = "Siswa B";
+    siswa2->info.id = "S002";
+    siswa2->info.asal = "Sekolah B";
+    siswa2->info.kelas = "X-B";
+    siswa2->info.usia = 17;
+    siswa2->next = nullptr;
+    siswa2->listtugas = nullptr;
+
+    adr_siswa siswa3 = new elm_siswa;
+    siswa3->info.name = "Siswa C";
+    siswa3->info.id = "S003";
+    siswa3->info.asal = "Sekolah C";
+    siswa3->info.kelas = "X-C";
+    siswa3->info.usia = 18;
+    siswa3->next = nullptr;
+    siswa3->listtugas = nullptr;
+
+    listSiswa.first = siswa1;
+    siswa1->next = siswa2;
+    siswa2->next = siswa3;
+    listSiswa.last = siswa3;
+
+    adr_guru guru1 = new elm_guru;
+    guru1->info.nama = "Guru A";
+    guru1->info.id = "G001";
+    guru1->info.asal = "Sekolah A";
+    guru1->info.gelar = "S.Pd";
+    guru1->info.guruSubjek = "Matematika";
+    guru1->info.usia = 40;
+    guru1->next = nullptr;
+    guru1->prev = nullptr;
+
+    adr_guru guru2 = new elm_guru;
+    guru2->info.nama = "Guru B";
+    guru2->info.id = "G002";
+    guru2->info.asal = "Sekolah B";
+    guru2->info.gelar = "S.Si";
+    guru2->info.guruSubjek = "IPA";
+    guru2->info.usia = 35;
+    guru2->next = nullptr;
+    guru2->prev = nullptr;
+
+    adr_tugas tugas1 = new elm_tugas;
+    tugas1->info.id = "T001";
+    tugas1->info.subjek = "Matematika";
+    tugas1->info.bab = 1;
+    tugas1->info.tenggat = "2024-12-20";
+    tugas1->next = nullptr;
+    tugas1->from = guru1;
+
+    siswa1->listtugas = tugas1;
+
+    adr_tugas tugas2 = new elm_tugas;
+    tugas2->info.id = "T002";
+    tugas2->info.subjek = "IPA";
+    tugas2->info.bab = 2;
+    tugas2->info.tenggat = "2024-12-22";
+    tugas2->next = nullptr;
+    tugas2->from = guru1;
+
+    tugas1->next = tugas2;
+
+    adr_tugas tugas3 = new elm_tugas;
+    tugas3->info.id = "T003";
+    tugas3->info.subjek = "Bahasa Indonesia";
+    tugas3->info.bab = 3;
+    tugas3->info.tenggat = "2024-12-18";
+    tugas3->next = nullptr;
+    tugas3->from = guru2;
+
+    siswa2->listtugas = tugas3;
+
+    listGuru.first = guru1;
+    guru1->next = guru2;
+    listGuru.last = guru2;
+}

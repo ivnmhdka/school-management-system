@@ -1,12 +1,11 @@
 #include "header.h"
 
-using namespace std;
-
-int main()
-{
+int main() {
     list_siswa listSiswa = {nullptr, nullptr};
     list_guru listGuru = {nullptr, nullptr};
-    
+
+    generate_dummy_data(listSiswa, listGuru);
+
     int choice;
     while (true) {
         int tugasCount = count_all_tugas(listSiswa);
@@ -58,6 +57,5 @@ int main()
             default: cout << "Invalid choice, try again.\n"; break;
         }
     }
-
     return 0;
 }
