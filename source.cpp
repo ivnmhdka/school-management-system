@@ -35,33 +35,33 @@ adr_tugas create_elm_tugas(infotype_tugas x) {
 }
 
 void insert_siswa(list_siswa &listSiswa, adr_siswa x) {
-    if (listSiswa.first == nullptr) {
+    if (listSiswa.first == nullptr) { // List kosong
         listSiswa.first = x;
         listSiswa.last = x;
-    } else {
+    } else { // Tambahkan di akhir list
         listSiswa.last->next = x;
         listSiswa.last = x;
     }
 }
 
 void insert_tugas(adr_siswa &xs, adr_guru xg, adr_tugas x) {
-    if (xs->listtugas == nullptr) { 
+    if (xs->listtugas == nullptr) { // Belum ada tugas
         xs->listtugas = x;
-    } else { 
+    } else { // Tambahkan di akhir list tugas
         adr_tugas temp = xs->listtugas;
         while (temp->next != nullptr) {
             temp = temp->next;
         }
         temp->next = x;
     }
-    x->from = xg;
+    x->from = xg; // Hubungkan tugas dengan guru
 }
 
 void insert_guru(list_guru &listGuru, adr_guru x) {
-    if (listGuru.first == nullptr) {
+    if (listGuru.first == nullptr) { // List kosong
         listGuru.first = x;
         listGuru.last = x;
-    } else { 
+    } else { // Tambahkan di akhir list
         listGuru.last->next = x;
         x->prev = listGuru.last;
         listGuru.last = x;
@@ -75,7 +75,7 @@ adr_siswa search_siswa(list_siswa listSiswa, string id, adr_siswa &prec) {
         prec = current;
         current = current->next;
     }
-    return current;
+    return current; // Mengembalikan alamat node jika ditemukan, atau nullptr jika tidak ditemukan
 }
 
 adr_guru search_guru(list_guru listGuru, string id, adr_guru &prec) {
@@ -85,9 +85,8 @@ adr_guru search_guru(list_guru listGuru, string id, adr_guru &prec) {
         prec = current;
         current = current->next;
     }
-    return current; 
+    return current; // Mengembalikan alamat node jika ditemukan, atau nullptr jika tidak ditemukan
 }
-
 
 adr_tugas search_tugas(list_siswa listSiswa, string id, adr_tugas &prec, adr_siswa &siswa) {
     prec = nullptr;
@@ -96,34 +95,38 @@ adr_tugas search_tugas(list_siswa listSiswa, string id, adr_tugas &prec, adr_sis
 
     while (siswa != nullptr) {
         current = siswa->listtugas;
-        prec = nullptr;
+        prec = nullptr; // Reset prec for each siswa's tugas list
         while (current != nullptr && current->info.id != id) {
             prec = current;
             current = current->next;
         }
-        if (current != nullptr) break;
+        if (current != nullptr) break; // Tugas ditemukan
         siswa = siswa->next;
     }
 
-    if (current == nullptr) { 
+    if (current == nullptr) { // Tugas tidak ditemukan
         siswa = nullptr;
     }
 
-    return current;
+    return current; // Mengembalikan alamat node jika ditemukan, atau nullptr jika tidak ditemukan
 }
 
 void delete_siswa(list_siswa &listSiswa, adr_siswa &p, adr_siswa &q) {
     if (listSiswa.first == p && listSiswa.last == p){
+        // Node p adalah satu satunya node
         listSiswa.first = nullptr;
         listSiswa.last = nullptr;
     }else if (listSiswa.first == p) {
+        // Node p adalah node pertama
         listSiswa.first = p->next;
         delete p;
     } else if (listSiswa.last == p){
+        // Node p adalah node terakhir
         listSiswa.last = q;
         q->next = nullptr;
         delete p;
     } else {
+        // Kondisi normal
         q->next = p->next;
         delete p;
         p = nullptr;
@@ -132,9 +135,11 @@ void delete_siswa(list_siswa &listSiswa, adr_siswa &p, adr_siswa &q) {
 
 void delete_tugas(adr_siswa &siswa, adr_tugas &p, adr_tugas &q) {
     if (siswa->listtugas == nullptr) {
+        // Node p adalah node pertama
         siswa->listtugas = p->next;
         delete p;
     } else {
+        // Node p bukan node pertama
         q->next = p->next;
         delete p;
     }
@@ -142,17 +147,21 @@ void delete_tugas(adr_siswa &siswa, adr_tugas &p, adr_tugas &q) {
 
 void delete_guru(list_guru &listGuru, adr_guru &p) {
     if (listGuru.first == p && listGuru.last == p){
+        // Node p adalah satu satunya node
         listGuru.first = nullptr;
         listGuru.last = nullptr;
         delete p;
     } else if (listGuru.first == p){
+        // Node p adalah node pertama
         listGuru.first = p->next;
         delete p;
     } else if (listGuru.last == p){
+        // Node p adalah node terakhir
         listGuru.last = p->prev;
         listGuru.last->next = nullptr;
         delete p;
     } else {
+        // Kondisi normal
         adr_guru q = p->prev;
         q->next = p->next;
         delete p;
@@ -339,7 +348,9 @@ int count_siswa_with_no_tugas(list_siswa listSiswa) {
 }
 
 void swap_guru_from_tugas(adr_tugas &xt, adr_guru xg) {
+    // Pastikan tugas (xt) dan guru (xg) valid
     if (xt != nullptr && xg != nullptr) {
+        // Menugaskan guru baru (xg) ke tugas (xt)
         xt->from = xg;
     }
 }
@@ -657,7 +668,9 @@ void process_swap_guru_from_tugas(list_siswa &listSiswa, list_guru &listGuru) {
     }
 }
 
+//dummy data
 void generate_dummy_data(list_siswa &listSiswa, list_guru &listGuru) {
+    // Dummy Siswa 1
     adr_siswa siswa1 = new elm_siswa;
     siswa1->info.name = "Siswa A";
     siswa1->info.id = "S001";
@@ -667,6 +680,7 @@ void generate_dummy_data(list_siswa &listSiswa, list_guru &listGuru) {
     siswa1->next = nullptr;
     siswa1->listtugas = nullptr;
 
+    // Dummy Siswa 2
     adr_siswa siswa2 = new elm_siswa;
     siswa2->info.name = "Siswa B";
     siswa2->info.id = "S002";
@@ -676,6 +690,7 @@ void generate_dummy_data(list_siswa &listSiswa, list_guru &listGuru) {
     siswa2->next = nullptr;
     siswa2->listtugas = nullptr;
 
+    // Dummy Siswa 3
     adr_siswa siswa3 = new elm_siswa;
     siswa3->info.name = "Siswa C";
     siswa3->info.id = "S003";
@@ -685,11 +700,13 @@ void generate_dummy_data(list_siswa &listSiswa, list_guru &listGuru) {
     siswa3->next = nullptr;
     siswa3->listtugas = nullptr;
 
+    // Link the students into the list
     listSiswa.first = siswa1;
     siswa1->next = siswa2;
     siswa2->next = siswa3;
     listSiswa.last = siswa3;
 
+    // Dummy Guru 1
     adr_guru guru1 = new elm_guru;
     guru1->info.nama = "Guru A";
     guru1->info.id = "G001";
@@ -700,6 +717,7 @@ void generate_dummy_data(list_siswa &listSiswa, list_guru &listGuru) {
     guru1->next = nullptr;
     guru1->prev = nullptr;
 
+    // Dummy Guru 2
     adr_guru guru2 = new elm_guru;
     guru2->info.nama = "Guru B";
     guru2->info.id = "G002";
@@ -710,6 +728,7 @@ void generate_dummy_data(list_siswa &listSiswa, list_guru &listGuru) {
     guru2->next = nullptr;
     guru2->prev = nullptr;
 
+    // Dummy Tugas 1 for Siswa A
     adr_tugas tugas1 = new elm_tugas;
     tugas1->info.id = "T001";
     tugas1->info.subjek = "Matematika";
@@ -720,6 +739,7 @@ void generate_dummy_data(list_siswa &listSiswa, list_guru &listGuru) {
 
     siswa1->listtugas = tugas1;
 
+    // Dummy Tugas 2 for Siswa A
     adr_tugas tugas2 = new elm_tugas;
     tugas2->info.id = "T002";
     tugas2->info.subjek = "IPA";
@@ -730,6 +750,7 @@ void generate_dummy_data(list_siswa &listSiswa, list_guru &listGuru) {
 
     tugas1->next = tugas2;
 
+    // Dummy Tugas for Siswa B
     adr_tugas tugas3 = new elm_tugas;
     tugas3->info.id = "T003";
     tugas3->info.subjek = "Bahasa Indonesia";
@@ -740,6 +761,7 @@ void generate_dummy_data(list_siswa &listSiswa, list_guru &listGuru) {
 
     siswa2->listtugas = tugas3;
 
+    // Link the guru ke list
     listGuru.first = guru1;
     guru1->next = guru2;
     listGuru.last = guru2;

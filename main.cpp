@@ -1,11 +1,14 @@
 #include "header.h"
 
 int main() {
+    // inisialisasi listss
     list_siswa listSiswa = {nullptr, nullptr};
     list_guru listGuru = {nullptr, nullptr};
 
+    // Generate dummy data
     generate_dummy_data(listSiswa, listGuru);
 
+    // Main loop with the menu
     int choice;
     while (true) {
         int tugasCount = count_all_tugas(listSiswa);
@@ -36,7 +39,6 @@ int main() {
         cout << "Your choice: ";
         cin >> choice;
 
-        // validasi input pengguna
         // if (!(cin >> choice)) {
         //     cout << "Invalid input, please enter a number.\n";
         //     cin.clear();
