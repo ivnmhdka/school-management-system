@@ -34,6 +34,8 @@ adr_tugas create_elm_tugas(infotype_tugas x) {
     return newTugas;
 }
 
+// IS: listSiswa mungkin kosong atau sudah memiliki data siswa.
+// FS: Node siswa baru ditambahkan di akhir listSiswa.
 void insert_siswa(list_siswa &listSiswa, adr_siswa x) {
     if (listSiswa.first == nullptr) { // List kosong
         listSiswa.first = x;
@@ -44,6 +46,8 @@ void insert_siswa(list_siswa &listSiswa, adr_siswa x) {
     }
 }
 
+// IS: Node xs menunjuk ke siswa tertentu, node xg menunjuk ke guru tertentu, dan tugas yang ditambahkan belum ada.
+// FS: Node tugas baru (x) ditambahkan ke list tugas milik siswa xs dan dihubungkan ke guru xg.
 void insert_tugas(adr_siswa &xs, adr_guru xg, adr_tugas x) {
     if (xs->listtugas == nullptr) { // Belum ada tugas
         xs->listtugas = x;
@@ -57,6 +61,8 @@ void insert_tugas(adr_siswa &xs, adr_guru xg, adr_tugas x) {
     x->from = xg; // Hubungkan tugas dengan guru
 }
 
+// IS: listGuru mungkin kosong atau sudah memiliki data guru.
+// FS: Node guru baru ditambahkan di akhir listGuru.
 void insert_guru(list_guru &listGuru, adr_guru x) {
     if (listGuru.first == nullptr) { // List kosong
         listGuru.first = x;
@@ -68,6 +74,9 @@ void insert_guru(list_guru &listGuru, adr_guru x) {
     }
 }
 
+// IS: listSiswa berisi node siswa yang mungkin kosong atau berisi beberapa data.
+// FS: Mengembalikan alamat node siswa dengan id tertentu, atau nullptr jika tidak ditemukan.
+//      Pointer prec menunjuk ke node sebelumnya jika ditemukan.
 adr_siswa search_siswa(list_siswa listSiswa, string id, adr_siswa &prec) {
     prec = nullptr;
     adr_siswa current = listSiswa.first;
@@ -78,6 +87,9 @@ adr_siswa search_siswa(list_siswa listSiswa, string id, adr_siswa &prec) {
     return current; // Mengembalikan alamat node jika ditemukan, atau nullptr jika tidak ditemukan
 }
 
+// IS: listGuru berisi node guru yang mungkin kosong atau berisi beberapa data.
+// FS: Mengembalikan alamat node guru dengan id tertentu, atau nullptr jika tidak ditemukan.
+//      Pointer prec menunjuk ke node sebelumnya jika ditemukan.
 adr_guru search_guru(list_guru listGuru, string id, adr_guru &prec) {
     prec = nullptr;
     adr_guru current = listGuru.first;
@@ -88,6 +100,10 @@ adr_guru search_guru(list_guru listGuru, string id, adr_guru &prec) {
     return current; // Mengembalikan alamat node jika ditemukan, atau nullptr jika tidak ditemukan
 }
 
+// IS: listSiswa berisi beberapa siswa, masing-masing mungkin memiliki list tugas.
+// FS: Mengembalikan alamat node tugas dengan id tertentu, atau nullptr jika tidak ditemukan.
+//      Pointer prec menunjuk ke node sebelumnya jika ditemukan.
+//      Pointer siswa menunjuk ke siswa pemilik tugas jika ditemukan.
 adr_tugas search_tugas(list_siswa listSiswa, string id, adr_tugas &prec, adr_siswa &siswa) {
     prec = nullptr;
     adr_tugas current = nullptr;
@@ -111,6 +127,9 @@ adr_tugas search_tugas(list_siswa listSiswa, string id, adr_tugas &prec, adr_sis
     return current; // Mengembalikan alamat node jika ditemukan, atau nullptr jika tidak ditemukan
 }
 
+
+// IS: Node siswa yang ingin dihapus diketahui (p), serta node sebelumnya (q).
+// FS: Node p dihapus dari list siswa.
 void delete_siswa(list_siswa &listSiswa, adr_siswa &p, adr_siswa &q) {
     if (listSiswa.first == p && listSiswa.last == p){
         // Node p adalah satu satunya node
@@ -133,6 +152,8 @@ void delete_siswa(list_siswa &listSiswa, adr_siswa &p, adr_siswa &q) {
     }
 }
 
+// IS: Node tugas yang ingin dihapus diketahui (p), serta node sebelumnya (q).
+// FS: Node p dihapus dari list tugas siswa.
 void delete_tugas(adr_siswa &siswa, adr_tugas &p, adr_tugas &q) {
     if (siswa->listtugas == nullptr) {
         // Node p adalah node pertama
@@ -145,6 +166,8 @@ void delete_tugas(adr_siswa &siswa, adr_tugas &p, adr_tugas &q) {
     }
 }
 
+// IS: Node guru yang ingin dihapus diketahui (p).
+// FS: Node p dihapus dari list guru.
 void delete_guru(list_guru &listGuru, adr_guru &p) {
     if (listGuru.first == p && listGuru.last == p){
         // Node p adalah satu satunya node
@@ -168,6 +191,9 @@ void delete_guru(list_guru &listGuru, adr_guru &p) {
     }
 }
 
+
+//IS: list_siswa berisi data siswa.
+//FS: Seluruh data siswa dalam list_siswa ditampilkan ke layar secara rapi.
 void show_all_siswa(list_siswa listSiswa) {
     cout << "====================================" << endl;
     cout << "        DATA SISWA (List Parent)    " << endl;
@@ -186,6 +212,8 @@ void show_all_siswa(list_siswa listSiswa) {
     }
 }
 
+//IS: list_guru berisi data guru.
+//FS: Seluruh data guru dalam list_guru ditampilkan ke layar secara rapi./
 void show_all_guru(list_guru listGuru) {
     cout << "====================================" << endl;
     cout << "        DATA GURU (List Child)      " << endl;
@@ -204,6 +232,8 @@ void show_all_guru(list_guru listGuru) {
     }
 }
 
+//IS: adr_siswa merujuk pada node siswa tertentu, dan node tersebut memiliki data tugas yang terkait.
+//FS: Seluruh data tugas siswa yang bersangkutan beserta guru yang memberikan tugas ditampilkan ke layar.
 void show_tugas_siswa_from(adr_siswa x) {
     if (x == nullptr) {
         cout << "Siswa tidak ditemukan." << endl;
@@ -234,6 +264,8 @@ void show_tugas_siswa_from(adr_siswa x) {
     }
 }
 
+//IS: list_siswa berisi data siswa beserta data tugas mereka.
+//FS: Untuk setiap siswa dalam list_siswa, seluruh data tugas beserta guru yang memberikan tugas ditampilkan ke layar.
 void show_all_tugas_siswa_from(list_siswa listSiswa) {
     cout << "====================================" << endl;
     cout << "   DATA SISWA DAN TUGAS (Parent-Child) " << endl;
@@ -251,6 +283,8 @@ void show_all_tugas_siswa_from(list_siswa listSiswa) {
     }
 }
 
+//IS: list_siswa berisi data siswa, dan adr_guru merujuk pada guru tertentu.
+//FS: Seluruh siswa yang memiliki tugas dari guru tersebut ditampilkan ke layar.
 void show_siswa_from_guru(list_siswa listSiswa, adr_guru x) {
     if (x == nullptr) {
         cout << "Guru tidak ditemukan." << endl;
@@ -281,6 +315,8 @@ void show_siswa_from_guru(list_siswa listSiswa, adr_guru x) {
     }
 }
 
+//IS: list_siswa berisi data siswa, dan adr_guru merujuk pada guru tertentu.
+//FS: Seluruh siswa yang memiliki tugas dari guru tertentu ditampilkan ke layar.
 void show_tugas_siswa_from_guru(list_siswa listSiswa, adr_guru x) {
     if (x == nullptr) {
         cout << "Guru tidak ditemukan." << endl;
@@ -305,6 +341,8 @@ void show_tugas_siswa_from_guru(list_siswa listSiswa, adr_guru x) {
     }
 }
 
+//IS: list_siswa berisi data siswa, dan setiap siswa memiliki daftar tugas masing-masing.
+//FS: Mengembalikan jumlah total semua tugas dari seluruh siswa dalam list_siswa.
 int count_all_tugas(list_siswa listSiswa) {
     int total = 0;
     adr_siswa currentSiswa = listSiswa.first;
@@ -321,6 +359,8 @@ int count_all_tugas(list_siswa listSiswa) {
     return total;
 }
 
+//IS: adr_siswa merujuk pada node siswa tertentu, dan node tersebut memiliki daftar tugas yang mungkin kosong atau terisi.
+//FS: Mengembalikan jumlah tugas dari siswa yang bersangkutan.
 int count_tugas_from_siswa(adr_siswa x) {
     int total = 0;
     adr_tugas currentTugas = x->listtugas;
@@ -333,6 +373,8 @@ int count_tugas_from_siswa(adr_siswa x) {
     return total;
 }
 
+//IS: list_siswa berisi data siswa, dan setiap siswa memiliki daftar tugas masing-masing (bisa kosong atau terisi).
+//FS: Mengembalikan jumlah siswa dalam list_siswa yang tidak memiliki tugas sama sekali.
 int count_siswa_with_no_tugas(list_siswa listSiswa) {
     int count = 0;
     adr_siswa currentSiswa = listSiswa.first;
@@ -347,6 +389,12 @@ int count_siswa_with_no_tugas(list_siswa listSiswa) {
     return count;
 }
 
+// Fungsi: swap_guru_from_tugas
+// IS: xt merujuk pada node tugas dengan data tugas tertentu, dan xg merujuk pada guru baru yang akan ditugaskan ke tugas tersebut.
+//     Sebelum fungsi dijalankan, field 'from' dari tugas (xt) menunjuk ke guru tertentu.
+
+// FS: Setelah fungsi dijalankan, tugas (xt) akan memiliki guru baru (xg) yang ditugaskan.
+//     Field 'from' dari xt akan menunjuk ke guru baru (xg).
 void swap_guru_from_tugas(adr_tugas &xt, adr_guru xg) {
     // Pastikan tugas (xt) dan guru (xg) valid
     if (xt != nullptr && xg != nullptr) {
